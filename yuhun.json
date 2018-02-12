@@ -1,0 +1,29 @@
+[
+  {
+    "id": 0,
+    "name": "\u9634\u6469\u7f57",
+    "position": 1,
+    "stars": 6,
+    "level": 15,
+    "attributes": {
+      "\u653b\u51fb": 513,
+      "\u653b\u51fb\u52a0\u6210": 3,
+      "\u66b4\u51fb\u4f24\u5bb3": 22,
+      "\u6548\u679c\u62b5\u6297": 3
+    }
+  },
+  {
+    "id": 1,
+    "name": "\u9634\u6469\u7f57",
+    "position": 3,
+    "stars": 6,
+    "level": 15,
+    "attributes": {
+      "\u751f\u547d\u52a0\u6210": 3,
+      "\u9632\u5fa1": 104,
+      "\u6548\u679c\u547d\u4e2d": 4,
+      "\u6548\u679c\u62b5\u6297": 11,
+      "\u901f\u5ea6": 8
+    }
+  }
+]
