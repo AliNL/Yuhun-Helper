@@ -82,12 +82,4 @@ class Helper:
                                             for key in best_n_list:
                                                 max_cost = key if key > max_cost else max_cost
                                             best_n_list.pop(max_cost)
-
-        for cost, yh_list in best_n_list.items():
-            print(cost)
-            shishen.clear_yuhun_list()
-            shishen.set_yuhun_list(yh_list)
-            print(shishen.final_attributes)
-            for yh in yh_list:
-                print('\t', yh.get_dict())
-            print('===================================================================================================')
+        return best_n_list
