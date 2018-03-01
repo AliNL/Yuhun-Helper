@@ -21,7 +21,7 @@ class Shishen:
         self.level = level
         self.yuhun_list = []
         self.final_attributes = self.attributes.copy()
-        self.cost = 99999999
+        self.cost = 99999
         if target:
             self.cost = self.target.get_cost(self.final_attributes)
 
@@ -51,7 +51,7 @@ class Shishen:
         for name, number in yuhun_name.items():
             if number > 1:
                 yuhun_attributes[KEY[name]] += VALUE[KEY[name]]
-        for key, value in self.attributes.items():
+        for key, value in self.final_attributes.items():
             if key in ['A', 'H', 'D']:
                 self.final_attributes[key] = value + value * yuhun_attributes[key + 'P'] + yuhun_attributes[key]
             else:
