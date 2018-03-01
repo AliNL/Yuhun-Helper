@@ -49,8 +49,8 @@ class Helper:
                 shishen.attributes = attributes
                 self.shishen_store[shishen.name] = shishen
 
-    def find_best_solution_for(self, shishen):
-        best_5_list = {}
+    def find_best_solution_for(self, shishen, n=3):
+        best_n_list = {}
         shishen.clear_yuhun_list()
         all_needed = {0, 1, 2, 3, 4, 5}
         for yuhun_name in shishen.type_names:
@@ -76,14 +76,14 @@ class Helper:
                                     for yuhun_6 in [yh for yh in self.yuhun_store if yh.position == other[1] + 1]:
                                         shishen.clear_yuhun_list()
                                         shishen.set_yuhun_list([yuhun_1, yuhun_2, yuhun_3, yuhun_4, yuhun_5, yuhun_6])
-                                        best_5_list[shishen.cost] = shishen.yuhun_list[:]
-                                        if len(best_5_list) > 5:
+                                        best_n_list[shishen.cost] = shishen.yuhun_list[:]
+                                        if len(best_n_list) > n:
                                             max_cost = 0
-                                            for key in best_5_list:
+                                            for key in best_n_list:
                                                 max_cost = key if key > max_cost else max_cost
-                                            best_5_list.pop(max_cost)
+                                            best_n_list.pop(max_cost)
 
-        for cost, yh_list in best_5_list.items():
+        for cost, yh_list in best_n_list.items():
             print(cost)
             shishen.clear_yuhun_list()
             shishen.set_yuhun_list(yh_list)
