@@ -55,9 +55,9 @@ class Window:
         self.target_shishen = None
         self.app = gui('御魂方案计算器', '900x400')
         self.app.startLabelFrame("目标设置", 0, 0, 1, 1)
-        self.app.addLabel('shishen', '式神名称：', 0, 0)
+        self.app.addLabel('shishen', '式神名称', 0, 0)
         option_list = list(shishen_store.keys())
-        option_list.append('- 空 -')
+        option_list.append('- -  空  - -')
         self.app.addOptionBox('shishen', option_list, 0, 1, 1, 1)
         self.app.setOptionBox('shishen', len(option_list) - 1, override=True)
         self.app.setOptionBoxChangeFunction('shishen', self.get_init_attributes)
