@@ -42,7 +42,7 @@ class Helper:
             for row in reader:
                 shishen = Shishen(row.pop('Name'))
                 type_names = row.pop('Types')
-                shishen.type_names = type_names.split('/')
+                shishen.type_name = type_names.split('/')
                 attributes = {key: float(value) for key, value in row.items()}
                 attributes['HR'] = 0.0
                 attributes['DR'] = 0.0
@@ -53,33 +53,32 @@ class Helper:
         best_n_list = {}
         shishen.clear_yuhun_list()
         all_needed = {0, 1, 2, 3, 4, 5}
-        for yuhun_name in shishen.type_names:
-            yuhun_needed = [[], [], [], [], [], []]
-            for yuhun in self.yuhun_store:
-                if yuhun.name == yuhun_name:
-                    yuhun_needed[yuhun.position - 1].append(yuhun)
-            for i in range(15):
-                s = SELECTION[i]
-                available = True
-                other = list(all_needed - set(s))
-                for j in s:
-                    if not yuhun_needed[j]:
-                        available = False
-                        break
-                if not available:
-                    continue
-                for yuhun_1 in yuhun_needed[s[0]]:
-                    for yuhun_2 in yuhun_needed[s[1]]:
-                        for yuhun_3 in yuhun_needed[s[2]]:
-                            for yuhun_4 in yuhun_needed[s[3]]:
-                                for yuhun_5 in [yh for yh in self.yuhun_store if yh.position == other[0] + 1]:
-                                    for yuhun_6 in [yh for yh in self.yuhun_store if yh.position == other[1] + 1]:
-                                        shishen.clear_yuhun_list()
-                                        shishen.set_yuhun_list([yuhun_1, yuhun_2, yuhun_3, yuhun_4, yuhun_5, yuhun_6])
-                                        best_n_list[shishen.cost] = shishen.yuhun_list[:]
-                                        if len(best_n_list) > n:
-                                            max_cost = 0
-                                            for key in best_n_list:
-                                                max_cost = key if key > max_cost else max_cost
-                                            best_n_list.pop(max_cost)
+        yuhun_needed = [[], [], [], [], [], []]
+        for yuhun in self.yuhun_store:
+            if not shishen.type_name or yuhun.name == shishen.type_name:
+                yuhun_needed[yuhun.position - 1].append(yuhun)
+        for i in range(15):
+            s = SELECTION[i]
+            available = True
+            other = list(all_needed - set(s))
+            for j in s:
+                if not yuhun_needed[j]:
+                    available = False
+                    break
+            if not available:
+                continue
+            for yuhun_1 in yuhun_needed[s[0]]:
+                for yuhun_2 in yuhun_needed[s[1]]:
+                    for yuhun_3 in yuhun_needed[s[2]]:
+                        for yuhun_4 in yuhun_needed[s[3]]:
+                            for yuhun_5 in [yh for yh in self.yuhun_store if yh.position == other[0] + 1]:
+                                for yuhun_6 in [yh for yh in self.yuhun_store if yh.position == other[1] + 1]:
+                                    shishen.clear_yuhun_list()
+                                    shishen.set_yuhun_list([yuhun_1, yuhun_2, yuhun_3, yuhun_4, yuhun_5, yuhun_6])
+                                    best_n_list[shishen.cost] = shishen.yuhun_list[:]
+                                    if len(best_n_list) > n:
+                                        max_cost = 0
+                                        for key in best_n_list:
+                                            max_cost = key if key > max_cost else max_cost
+                                        best_n_list.pop(max_cost)
         return best_n_list

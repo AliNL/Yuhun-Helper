@@ -8,15 +8,13 @@ VALUE = {'AP': 0.15, 'CR': 0.15, 'HP': 0.15, 'DP': 0.30,
 
 
 class Shishen:
-    def __init__(self, name, attributes=None, type_names=None, target=None, level=40):
+    def __init__(self, name, attributes=None, type_name=None, target=None, level=40):
         self.name = name
         self.attributes = {'A': 0, 'H': 0, 'D': 0, 'CR': 0, 'CA': 0,
                            'HR': 0, 'DR': 0, 'S': 0}
         if attributes:
             self.attributes = attributes
-        self.type_names = None
-        if type_names:
-            self.type_names = type_names
+        self.type_name = type_name
         self.target = target
         self.level = level
         self.yuhun_list = []

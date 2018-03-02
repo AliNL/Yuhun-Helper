@@ -5,6 +5,11 @@ from appJar import gui
 from src.helper import Helper
 from src.target import Target
 
+TUHUN_TYPES = ['- -  无  - -', '阴摩罗', '心眼', '鸣屋', '狰', '轮入道', '蝠翼',
+               '镇墓兽', '破势', '伤魂鸟', '网切', '三味', '针女',
+               '树妖', '薙魂', '钟灵', '镜姬', '被服', '涅槃之火', '地藏像',
+               '木魅', '日女巳时', '反枕', '招财猫', '雪幽魂', '魅妖', '珍珠',
+               '火灵', '蚌精', '魍魉之匣', '返魂香', '狂骨', '幽谷响', '骰子鬼']
 ATTRIBUTES = {'A': '攻击', 'H': '生命', 'D': '防御', 'S': '速度', 'CR': '暴击', 'CA': '暴击伤害', 'HR': '效果命中', 'DR': '效果抵抗'}
 YUHUN_ATTRIBUTES = {'A': '攻击', 'AP': '攻击加成', 'H': '生命', 'HP': '生命加成', 'D': '防御', 'DP': '防御加成',
                     'CR': '暴击', 'CA': '暴击伤害', 'HR': '效果命中', 'DR': '效果抵抗', 'S': '速度'}
@@ -64,7 +69,10 @@ class Window:
         self.app.addLabel('weight', '属性权重', 0, 2, 2, 1)
         next_row = self.add_attribute_labels(ATTRIBUTES, 1, 0)
         self.add_weight_scales(ATTRIBUTES, 1, 2)
-        self.app.addNamedButton('确定', 'ok', self.start, next_row, 0, 4, 1)
+        self.app.addLabel('types', '四件套', next_row, 0, 1, 1)
+        self.app.addOptionBox('types', TUHUN_TYPES, next_row, 1, 1, 1)
+        self.app.addNamedButton('确定', 'ok', self.start, next_row, 2, 1, 1)
+        self.app.addLabel('result', '', next_row, 3, 1, 1)
         self.app.disableButton('ok')
         self.app.stopLabelFrame()
         self.app.startTabbedFrame('Solutions', 0, 1)
@@ -134,7 +142,12 @@ class Window:
         for key in ATTRIBUTES:
             weights[key + 'W'] = self.app.getScale(key + 'W')
         self.target_shishen.target = Target(weights)
+        if self.app.getOptionBox('types') != '- -  无  - -':
+            self.target_shishen.type_name = self.app.getOptionBox('types')
         best_n_list = helper.find_best_solution_for(self.target_shishen)
+        if not best_n_list:
+            self.app.setLabel('result', '无可用方案')
+            return
         i = 1
         for yh_list in best_n_list.values():
             self.target_shishen.clear_yuhun_list()
@@ -151,6 +164,7 @@ class Window:
                     self.app.setLabel('方案' + str(i) + str(k) + 'yuhun_value_' + str(j), value)
                     j += 1
             i += 1
+        self.app.setLabel('result', '生成完毕！')
 
     def add_yuhun_list_toggles(self, name, row0, col0):
         for i in range(6):
